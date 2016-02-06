@@ -1,0 +1,189 @@
+/***********************
+Trigonometry Calculator
+Patryk Sowinski
+
+20/11/2015
+***********************/
+#include<iostream>
+#include<iomanip>
+#include<cmath>
+#include <windows.h>
+
+using namespace std;
+
+int main(){
+	//Program loop check
+	bool isRunning = true;
+	//Variable for checking if the user wants to continiue
+	int con;
+	//Variables for calcualtions
+	double sideA=0;
+	double sideB=0;
+	double sideC=0;
+
+	double angleZ=0;
+	double angleX=0;	
+	double area=0;
+
+	//Set the displayed values to 2 decimal places
+	cout<<fixed<<setprecision(2);
+
+	//Program loop
+	while(isRunning){
+		//Default all of the values
+		sideA=0;
+		sideB=0;
+		sideC=0;
+		angleZ=0;
+		angleX=0;	
+		area = 0;
+
+		//Display the title
+		cout<<"\nThe Trigonometry Calculator - Right Triangles"<<endl<<endl;
+
+		//Input loop
+		while(sideA == 0 && sideB == 0 && sideC == 0 && angleX == 0 && angleZ == 0){
+			//Draw an example triangle with lables for the sides
+			cout<<"	                 #  "<<endl;
+			cout<<"	              # x#  "<<endl;
+			cout<<"	            #    #  "<<endl;
+			cout<<"	       C  #      #  "<<endl;
+			cout<<"	        #        # A"<<endl;
+			cout<<"	      #          #  "<<endl;
+			cout<<"	    #            #  "<<endl;
+			cout<<"	  # z         90 #  "<<endl;
+			cout<<"	##################  "<<endl;
+			cout<<"	       B            "<<endl;
+			//Ask user to input
+			cout<<endl<<"Please enter side 'A' (if unknown enter 0): ";
+			cin>>sideA;
+
+			cout<<endl<<"Please enter side 'B' (if unknown enter 0): ";
+			cin>>sideB;
+
+			cout<<endl<<"Please enter side 'C' (if unknown enter 0): ";
+			cin>>sideC;
+
+			cout<<endl<<"Please enter angle 'z' (if unknown enter 0): ";
+			cin>>angleZ;
+
+			cout<<endl<<"Please enter angle 'x' (if unknown enter 0): ";
+			cin>>angleX;
+			//Clear the screen
+			system("cls");
+			//If the user hasn't entered any values prompt them about it and repeat the input loop
+			if(sideA == 0 && sideB == 0 && sideC == 0 && angleX == 0 && angleZ == 0){
+				cout<<endl<<"Not enough information!\n";
+			}
+		}//End of input loop
+
+		//Calculation Loop
+		while(sideA == 0 || sideB == 0 || sideC == 0 || angleX == 0 || angleZ == 0){
+			//CALCULATE A USING SIDE B AND C
+			if( sideA == 0 && sideB != 0 && sideC != 0 ){
+				sideA = sqrt(pow(sideC,2)-pow(sideB,2));			
+			}
+
+			//CALCULATE B USING SIDE A AND C
+			if( sideA != 0 && sideB == 0 && sideC != 0 ){
+				sideB = sqrt(pow(sideC,2)-pow(sideA,2));
+			}
+
+			//CALCULATE HYPOTHONUSE USING SIDE A AND B
+			if(sideC == 0 && sideA != 0 && sideB != 0){
+				sideC = sqrt(pow(sideA,2)+pow(sideB,2));			
+			}
+
+			//CALCULATE ANGLE Z USING SIDE A AND C
+			if(angleZ == 0 && sideA != 0 && sideC != 0){	
+				angleZ = asin(sideA/sideC);
+				angleZ = ((180.0 * angleZ) / 3.14159265358979323846); 
+			}
+
+			//CALCULATE ANGLE X USING SIDE B AND C
+			if(angleX == 0 && sideB != 0 && sideC != 0){	
+				angleX = asin(sideB/sideC);
+				angleX = ((180.0 * angleX) / 3.14159265358979323846);
+			}
+
+			//CALCULATE B USING ANGLE X AND SIDE A
+			if( sideA != 0 && sideB == 0 && angleX != 0 ){
+				sideB = ((3.14159265358979323846 * angleX) / 180.0);
+				sideB = sideA * tan(sideB);
+			}
+
+			//CALCULATE B USING ANGLE Z AND SIDE A
+			if( sideA != 0 && sideB == 0 && angleZ != 0 ){
+				sideB = ((3.14159265358979323846 * angleZ) / 180.0);
+				sideB = sideA / tan(sideB);
+			}
+
+			//CALCULATE C USING ANGLE X AND SIDE A
+			if( sideA != 0 && sideC == 0 && angleX != 0 ){
+				sideC = ((3.14159265358979323846 * angleX) / 180.0);
+				sideC = sideA / cos(sideC);
+			}
+
+			//CALCULATE C USING ANGLE Z AND SIDE A
+			if( sideA != 0 && sideC == 0 && angleZ != 0 ){
+				sideC = ((3.14159265358979323846 * angleZ) / 180.0);
+				sideC = sideA / sin(sideC);
+			}
+
+			//CALCULATE A USING ANGLE X AND SIDE B
+			if( sideB != 0 && sideA == 0 && angleX != 0 ){
+				sideA = ((3.14159265358979323846 * angleX) / 180.0);
+				sideA = sideB / tan(sideA);
+			}
+
+			//CALCULATE A USING ANGLE Z AND SIDE B
+			if( sideB != 0 && sideA == 0 && angleZ != 0 ){
+				sideA = ((3.14159265358979323846 * angleZ) / 180.0);
+				sideA = sideB * tan(sideA);
+			}
+
+			//CALCULATE A USING ANGLE X AND SIDE C
+			if( sideC != 0 && sideA == 0 && angleX != 0 ){
+				sideA = ((3.14159265358979323846 * angleX) / 180.0);
+				sideA = sideC * cos(sideA);
+			}
+
+			//CALCULATE A USING ANGLE Z AND SIDE C
+			if( sideC != 0 && sideA == 0 && angleZ != 0 ){
+				sideA = ((3.14159265358979323846 * angleZ) / 180.0);
+				sideA = sideC * sin(sideA);
+			}
+			//CALCULATE THE AREA
+			area = (sideA * sideB) / 2;
+		}//End of calculation loop
+
+		//Clear the screen and wait 2 seconds
+		system("cls");
+		Sleep(2000);
+
+		//Display the results
+		cout<<endl<<"SIDES:";
+		cout<<endl<<"A: "<<sideA;
+		cout<<endl<<"B: "<<sideB;
+		cout<<endl<<"C: "<<sideC;
+		cout<<endl<<"ANGLES:";
+		cout<<endl<<"z: "<<angleZ;
+		cout<<endl<<"x: "<<angleX;
+		cout<<endl<<"AREA:";
+		cout<<endl<<"Area: "<<area;
+
+		//Ask the user if they want to do another calculation
+		cout<<endl<<endl<<"Would you like to do another calculation? (0 for N / 1 for Y):";
+		cin>>con;
+		//Check their input
+		if(con == 0){
+			isRunning = 0;
+		}
+		//Clear the screen and wait 2 seconds
+		system("cls");
+		Sleep(2000);
+	}//End of program loop
+
+	//Quit the program
+return 0;
+}
